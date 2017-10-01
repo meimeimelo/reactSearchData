@@ -26,7 +26,6 @@ class SearchFormContainer extends Component {
     event.preventDefault()
     const { searchInput } = this.state
     const searchOutput = mockupData.data.filter(value => value.user_name.toLowerCase() === searchInput)
-
     this.setState({
       onValueDisplay: true,
       searchData: searchOutput
@@ -35,9 +34,11 @@ class SearchFormContainer extends Component {
 
   renderActivityIndicator() {
     const { searchInput } = this.state
-    const activityIndicator = !!searchInput ? <p>Typing</p> : <p>Input github username</p>
-
-    return activityIndicator
+    return (
+      <p className='activityText'>
+        { searchInput ? 'Typing...' : 'Input github username' }
+      </p>
+    )
   }
 
   render() {
@@ -45,7 +46,7 @@ class SearchFormContainer extends Component {
     const { searchInput, onValueDisplay } = this.state
     return (
       <div className='searchFormContainer'>
-        <form onSubmit={this.onHandleSubmit}>
+        <form className='searchForm' onSubmit={this.onHandleSubmit}>
           <input
             type='text'
             placeholder='Input github username'

@@ -1,31 +1,17 @@
 .searchFormContainer {
   min-width: 1200px;
-  /*width: 100%;*/
-  margin-top: 15px;
-  margin-bottom: 15px;
-  /*background-color: red;*/
+  width: 80%;
+  margin: 20px auto;
 }
 
 /*Input styles*/
-input[type=submit] {
-  /*width: 20%;*/
-  background-color: #E25B2E;
-  color: white;
-  margin: 10px 15px;
-  padding: 14px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-input[type=submit]:hover {
-  background-color: #E73C2F;
+.searchForm {
+  text-align: center;
 }
 
 input[type=text], select {
-  /*width: 80%;*/
-  margin: 10px 15px;
+  width: 75%;
+  margin: 10px 0;
   padding: 12px 20px;
   display: inline-block;
   border: 1px solid #ccc;
@@ -34,7 +20,103 @@ input[type=text], select {
   font-size: 16px;
 }
 
+input[type=submit] {
+  width: 20%;
+  background-color: #999798;
+  color: white;
+  margin: 10px 0 10px 5%;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+input[type=submit]:hover {
+  background-color: #E25B2E;
+}
+
+.activityText {
+  text-align: center;
+  font-size: 20px;
+}
+
 .searchContent {
-  padding: 20px;
-  background-color: blue;
+  margin: 40px 0;
+}
+
+.displayTable {
+  display: table;
+  width: 100%;
+}
+
+.userUrlAvatar {
+  display: table-cell;
+  text-align: center;
+  width: 15%;
+  vertical-align: top;
+}
+
+.userUrlAvatar img {
+  height: 100px;
+  width: 100px;
+}
+
+.userInfo {
+  display: table-cell;
+  width: 85%;
+  vertical-align: top;
+}
+
+.userNameText {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.userDisplayTableCell {
+  display: table-cell;
+  width: 50%;
+}
+
+.contentCard {
+  padding: 30px 30px 80px;
+  background-color: #FFFFFF;
+  border: 1px solid #D6D6D8;
+  border-radius: 10px;
+}
+
+.nonMarginTop {
+  margin-top: 0;
+}
+
+.nonMarginBottom {
+  margin-bottom: 0;
+}
+
+.logoTableCell {
+  width: 15%;
+  display: table-cell;
+}
+
+.logoTableCell img {
+  height: 50px;
+  width: 50px;
+  vertical-align: middle;
+}
+
+.contentItemList {
+  margin-bottom: 10px;
+}
+
+.itemTableCell {
+  width: 85%;
+  height: 50px;
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 10px
+}
+
+.itemTableCell a{
+  text-decoration: none;
+  color: #007B85;
 }
