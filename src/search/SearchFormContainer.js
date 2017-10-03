@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import './styles.css'
 import SearchContent from './SearchContent'
 import mockupData from './mockupData'
+import { fetchPostsWithRedux } from '../actions/gitHubAction'
 
 class SearchFormContainer extends Component {
   constructor(props) {
@@ -13,6 +15,11 @@ class SearchFormContainer extends Component {
     }
     this.onHandleSubmit = this.onHandleSubmit.bind(this)
     this.onHandleChange = this.onHandleChange.bind(this)
+  }
+
+  componentDidMount() {
+    const { fetchData } = this.props
+    fetchData()
   }
 
   onHandleChange(event) {
@@ -42,6 +49,7 @@ class SearchFormContainer extends Component {
   }
 
   render() {
+    console.log('posts: ', this.props.posts)
     const { searchData } = this.state
     const { searchInput, onValueDisplay } = this.state
     return (
@@ -67,4 +75,16 @@ class SearchFormContainer extends Component {
   }
 }
 
-export default SearchFormContainer
+const mapStateToProps = (state, ownProps) => {
+  return {
+    posts: state.posts
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    fetchData: () => fetchPostsWithRedux(dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchFormContainer)
