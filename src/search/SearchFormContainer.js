@@ -5,6 +5,7 @@ import SearchContent from './SearchContent'
 import mockupData from './mockupData'
 import { fetchPostsWithRedux } from '../actions/gitHubAction'
 import { fetchFollowerWithRedux } from '../actions/userFollowerAction'
+import { fetchRepoWithRedux } from '../actions/userRepoAction'
 
 class SearchFormContainer extends Component {
   constructor(props) {
@@ -13,7 +14,8 @@ class SearchFormContainer extends Component {
       onValueDisplay: false,
       searchInput: '',
       searchData: [],
-      userFollowersData: []
+      userFollowersData: [],
+      userReposData: []
     }
     this.onHandleSubmit = this.onHandleSubmit.bind(this)
     this.onHandleChange = this.onHandleChange.bind(this)
@@ -23,16 +25,24 @@ class SearchFormContainer extends Component {
     console.log('nextProps: ', nextProps)
     const {
       searchData,
-      userFollowersData
+      userFollowersData,
+      userReposData
      } = this.state
+
     if(nextProps.userData !== searchData) {
       this.setState({
+        ...this.state,
         searchData: nextProps.userData
       })
     } else if (nextProps.followerData !== userFollowersData) {
-        console.log('userFollowersData nextProps: ', nextProps.followerData)
       this.setState({
+        ...this.state,
         userFollowersData: nextProps.followerData
+      })
+    } else if (nextProps.repoData !== userReposData) {
+      this.setState({
+        ...this.state,
+        userReposData: nextProps.repoData
       })
     }
   }
@@ -48,7 +58,8 @@ class SearchFormContainer extends Component {
     event.preventDefault()
     const {
       fetchData,
-      fetchFollower
+      fetchFollower,
+      fetchRepo
      } = this.props
     const { searchInput } = this.state
     const searchOutput = mockupData.data.filter(value => value.user_name.toLowerCase() === searchInput)
@@ -58,6 +69,7 @@ class SearchFormContainer extends Component {
     })
     fetchData(searchInput)
     fetchFollower(searchInput)
+    fetchRepo(searchInput)
   }
 
   renderActivityIndicator() {
@@ -70,10 +82,10 @@ class SearchFormContainer extends Component {
   }
 
   render() {
-    console.log('searchItem: ', this.props.searchItem)
     const {
       searchData,
-      userFollowersData
+      userFollowersData,
+      userReposData
      } = this.state
     const { searchInput, onValueDisplay } = this.state
     return (
@@ -94,6 +106,7 @@ class SearchFormContainer extends Component {
           ? <SearchContent
             searchData={searchData}
             followerData={userFollowersData}
+            repoData={userReposData}
             searchValue={searchInput}
             />
           : this.renderActivityIndicator()
@@ -107,14 +120,16 @@ const mapStateToProps = (state, ownProps) => {
   console.log('state: ', state)
   return {
     userData: state.gitHub.user,
-    followerData: state.userFollowers.followers
+    followerData: state.userFollowers.followers,
+    repoData: state.userRepos.user_repo,
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     fetchData: (userName) => fetchPostsWithRedux(dispatch, userName),
-    fetchFollower: (userName) => fetchFollowerWithRedux(dispatch, userName)
+    fetchFollower: (userName) => fetchFollowerWithRedux(dispatch, userName),
+    fetchRepo: (userName) => fetchRepoWithRedux(dispatch, userName)
   }
 }
 
