@@ -33,7 +33,6 @@ export const fetchFollowerWithRedux = (dispatch, userName) => {
 }
 
 const fetchFollower = (userName) => {
-  console.log('fetching...')
   return fetch(`https://api.github.com/users/${userName}/followers`, { method: 'GET'})
     .then(response => Promise.all([response, response.json()]))
 }
