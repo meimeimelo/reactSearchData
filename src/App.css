@@ -1,5 +1,8 @@
 .App {
   width: 100%;
+  margin: 0 auto;
+  min-width: 320px;
+  max-width: 1200px;
 }
 
 @keyframes App-logo-spin {
