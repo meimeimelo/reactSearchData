@@ -5,10 +5,10 @@ import {
 } from '../actions/actionTypes'
 
 const initialState = {
-  posts: {}
+  user: []
 }
 
-const gitHub = (state = {}, action) => {
+const gitHub = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_USER_REQUEST:
       return state
