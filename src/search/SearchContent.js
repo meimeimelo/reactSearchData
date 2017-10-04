@@ -12,13 +12,15 @@ class SearchContent extends Component {
       const {
         login,
         avatar_url,
-        url
+        url,
+        name,
+        html_url
       } = value
       return (
         <div key={`${listType}${index}`} className='contentItemList'>
           { userListType[listType] === userListType['repository']
             ? <div className='itemTableCell'>
-                <a href={url}>{ login }</a>
+                <a href={html_url} target='_blank'>{ name }</a>
               </div>
             : <div className='displayTable'>
                 <div className='logoTableCell'>
@@ -37,8 +39,11 @@ class SearchContent extends Component {
   }
 
   renderSearchContent() {
-    const { searchData, followerData } = this.props
-    console.log('this.props.followerData: ', followerData)
+    const {
+      searchData,
+      followerData,
+      repoData
+    } = this.props
     const searchInfo = searchData.map((value, index) => {
       return (
         <div key={index} className='searchContent'>
@@ -65,7 +70,7 @@ class SearchContent extends Component {
 
                   <div className='userDisplayTableCell'>
                     <p>Repository:</p>
-                    { this.renderUserListInfo(followerData, 'repository') }
+                    { this.renderUserListInfo(repoData, 'repository') }
                   </div>
                 </div>
               </div>
