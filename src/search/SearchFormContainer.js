@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import './styles.css'
 import SearchContent from './SearchContent'
-import mockupData from './mockupData'
 import { fetchPostsWithRedux } from '../actions/gitHubAction'
 import { fetchFollowerWithRedux } from '../actions/userFollowerAction'
 import { fetchRepoWithRedux } from '../actions/userRepoAction'
@@ -22,7 +21,6 @@ class SearchFormContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps: ', nextProps)
     const {
       searchData,
       userFollowersData,
@@ -62,10 +60,8 @@ class SearchFormContainer extends Component {
       fetchRepo
      } = this.props
     const { searchInput } = this.state
-    const searchOutput = mockupData.data.filter(value => value.user_name.toLowerCase() === searchInput)
     this.setState({
-      onValueDisplay: true,
-      searchData: searchOutput
+      onValueDisplay: true
     })
     fetchData(searchInput)
     fetchFollower(searchInput)
@@ -117,7 +113,6 @@ class SearchFormContainer extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log('state: ', state)
   return {
     userData: state.gitHub.user,
     followerData: state.userFollowers.followers,
