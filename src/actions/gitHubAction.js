@@ -1,30 +1,28 @@
 import {
-  FETCH_REQUEST,
-  FETCH_SUCCESS,
-  FETCH_ERROR
+  FETCH_USER_REQUEST,
+  FETCH_USER_SUCCESS,
+  FETCH_USER_ERROR
 } from './actionTypes'
 
 export const fetchPostsRequest = () => ({
-  type: FETCH_REQUEST
+  type: FETCH_USER_REQUEST
 })
 
 export const fetchPostsSuccess = (payload) => ({
-  type: FETCH_SUCCESS,
-  payload
+    type: FETCH_USER_SUCCESS,
+    payload
 })
 
 export const fetchPostsError = () => ({
-  type: FETCH_ERROR
+  type: FETCH_USER_ERROR
 })
 
-export const fetchPostsWithRedux = (dispatch) => {
+export const fetchPostsWithRedux = (dispatch, userName) => {
   console.log('fetchPostsWithRedux')
   dispatch(fetchPostsRequest())
-  fetchPosts().then(([response, json]) =>{
-    console.log('response: ', response)
-    if(response.status === 200){
-      const jsonResponse = json.data.children
-      dispatch(fetchPostsSuccess(jsonResponse))
+  fetchPosts(userName).then(([response, json]) =>{
+    if(response.ok){
+      dispatch(fetchPostsSuccess(json))
     }
     else{
       dispatch(fetchPostsError())
@@ -32,8 +30,8 @@ export const fetchPostsWithRedux = (dispatch) => {
   })
 }
 
-const fetchPosts = () => {
+const fetchPosts = (userName) => {
   console.log('fetching...')
-  return fetch(`https://api.github.com/users/.json`, { method: 'GET'})
+  return fetch(`https://api.github.com/users/${userName}`, { method: 'GET'})
     .then(response => Promise.all([response, response.json()]))
 }
