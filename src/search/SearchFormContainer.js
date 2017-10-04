@@ -95,7 +95,7 @@ class SearchFormContainer extends Component {
           />
           <input
             type="submit"
-            value="Submit"
+            value="OK"
           />
         </form>
         { onValueDisplay
