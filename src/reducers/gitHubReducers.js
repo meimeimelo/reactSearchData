@@ -1,23 +1,21 @@
 import {
-  FETCH_REQUEST,
-  FETCH_SUCCESS,
-  FETCH_ERROR
+  FETCH_USER_REQUEST,
+  FETCH_USER_SUCCESS,
+  FETCH_USER_ERROR
 } from '../actions/actionTypes'
 
 const initialState = {
-  posts: []
+  posts: {}
 }
 
 const gitHub = (state = {}, action) => {
-  console.log('actions: ', action)
   switch (action.type) {
-    case FETCH_REQUEST:
+    case FETCH_USER_REQUEST:
       return state
-    case FETCH_SUCCESS:
-    console.log('I am at FETCH_SUCCESS')
+    case FETCH_USER_SUCCESS:
       return {
         ...state,
-        posts: action.payload
+        user: [ action.payload ]
       }
     default:
       return state
