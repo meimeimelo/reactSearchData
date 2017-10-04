@@ -7,20 +7,25 @@ class SearchContent extends Component {
       repository: 'Repository',
       follower: 'Follower'
     }
+
     const renderFollowerSection = items.map((value, index) => {
-      const { follower_name, repo_name } = value
+      const {
+        login,
+        avatar_url,
+        url
+      } = value
       return (
         <div key={`${listType}${index}`} className='contentItemList'>
           { userListType[listType] === userListType['repository']
             ? <div className='itemTableCell'>
-                <a href='#'>{ repo_name }</a>
+                <a href={url}>{ login }</a>
               </div>
             : <div className='displayTable'>
                 <div className='logoTableCell'>
-                  <img src="https://www.w3schools.com/images/w3schools_green.jpg" alt="FollowerAvatarImg" />
+                  <img src={avatar_url} alt="FollowerAvatarImg" />
                  </div>
                  <div className='itemTableCell'>
-                   { follower_name }
+                   { login }
                  </div>
               </div>
            }
@@ -32,34 +37,35 @@ class SearchContent extends Component {
   }
 
   renderSearchContent() {
-    const { searchData } = this.props
+    const { searchData, followerData } = this.props
+    console.log('this.props.followerData: ', followerData)
     const searchInfo = searchData.map((value, index) => {
       return (
         <div key={index} className='searchContent'>
           <div className='contentCard'>
             <div className='displayTable'>
               <div className='userUrlAvatar'>
-                <img src="https://www.w3schools.com/images/w3schools_green.jpg" alt="userUrlAvatarImg" />
+                <img src={value.avatar_url} alt="userUrlAvatarImg" />
               </div>
               <div className='userInfo'>
                 <div className='userNameText'>
-                  {value.user_name}
+                  {value.login}
                 </div>
 
                 <div>
                   <p className='nonMarginBottom'>Bio:</p>
-                  <p className='nonMarginTop'>{value.user_bio}</p>
+                  <p className='nonMarginTop'>{value.bio}</p>
                 </div>
 
                 <div className='displayTable'>
                   <div className='userDisplayTableCell'>
                     <p>Followers:</p>
-                    { this.renderUserListInfo(value.user_follower, 'follwer') }
+                    { this.renderUserListInfo(followerData, 'follwer') }
                   </div>
 
                   <div className='userDisplayTableCell'>
                     <p>Repository:</p>
-                    { this.renderUserListInfo(value.user_repo, 'repository') }
+                    { this.renderUserListInfo(followerData, 'repository') }
                   </div>
                 </div>
               </div>

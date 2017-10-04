@@ -4,6 +4,7 @@ import './styles.css'
 import SearchContent from './SearchContent'
 import mockupData from './mockupData'
 import { fetchPostsWithRedux } from '../actions/gitHubAction'
+import { fetchFollowerWithRedux } from '../actions/userFollowerAction'
 
 class SearchFormContainer extends Component {
   constructor(props) {
@@ -11,15 +12,29 @@ class SearchFormContainer extends Component {
     this.state = {
       onValueDisplay: false,
       searchInput: '',
-      searchData: []
+      searchData: [],
+      userFollowersData: []
     }
     this.onHandleSubmit = this.onHandleSubmit.bind(this)
     this.onHandleChange = this.onHandleChange.bind(this)
   }
 
-  componentDidMount() {
-    const { fetchData } = this.props
-    fetchData()
+  componentWillReceiveProps(nextProps) {
+    console.log('nextProps: ', nextProps)
+    const {
+      searchData,
+      userFollowersData
+     } = this.state
+    if(nextProps.userData !== searchData) {
+      this.setState({
+        searchData: nextProps.userData
+      })
+    } else if (nextProps.followerData !== userFollowersData) {
+        console.log('userFollowersData nextProps: ', nextProps.followerData)
+      this.setState({
+        userFollowersData: nextProps.followerData
+      })
+    }
   }
 
   onHandleChange(event) {
@@ -31,12 +46,18 @@ class SearchFormContainer extends Component {
 
   onHandleSubmit(event) {
     event.preventDefault()
+    const {
+      fetchData,
+      fetchFollower
+     } = this.props
     const { searchInput } = this.state
     const searchOutput = mockupData.data.filter(value => value.user_name.toLowerCase() === searchInput)
     this.setState({
       onValueDisplay: true,
       searchData: searchOutput
     })
+    fetchData(searchInput)
+    fetchFollower(searchInput)
   }
 
   renderActivityIndicator() {
@@ -49,8 +70,11 @@ class SearchFormContainer extends Component {
   }
 
   render() {
-    console.log('posts: ', this.props.posts)
-    const { searchData } = this.state
+    console.log('searchItem: ', this.props.searchItem)
+    const {
+      searchData,
+      userFollowersData
+     } = this.state
     const { searchInput, onValueDisplay } = this.state
     return (
       <div className='searchFormContainer'>
@@ -67,7 +91,11 @@ class SearchFormContainer extends Component {
           />
         </form>
         { onValueDisplay
-          ? <SearchContent searchData={searchData} searchValue={searchInput} />
+          ? <SearchContent
+            searchData={searchData}
+            followerData={userFollowersData}
+            searchValue={searchInput}
+            />
           : this.renderActivityIndicator()
         }
       </div>
@@ -76,14 +104,17 @@ class SearchFormContainer extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  console.log('state: ', state)
   return {
-    posts: state.posts
+    userData: state.gitHub.user,
+    followerData: state.userFollowers.followers
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    fetchData: () => fetchPostsWithRedux(dispatch)
+    fetchData: (userName) => fetchPostsWithRedux(dispatch, userName),
+    fetchFollower: (userName) => fetchFollowerWithRedux(dispatch, userName)
   }
 }
 
