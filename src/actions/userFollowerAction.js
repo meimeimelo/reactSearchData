@@ -8,13 +8,10 @@ export const fetchFollowerRequest = () => ({
   type: FETCH_FOLLOWER_REQUEST
 })
 
-export const fetchFollowerSuccess = (payload) => {
-  console.log('Payload action: ', payload)
-  return ({
+export const fetchFollowerSuccess = (payload) => ({
     type: FETCH_FOLLOWER_SUCCESS,
     payload
-  })
-}
+})
 
 export const fetchFollowerError = () => ({
   type: FETCH_FOLLOWER_ERROR

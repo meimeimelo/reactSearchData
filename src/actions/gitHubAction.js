@@ -18,7 +18,6 @@ export const fetchPostsError = () => ({
 })
 
 export const fetchPostsWithRedux = (dispatch, userName) => {
-  console.log('fetchPostsWithRedux')
   dispatch(fetchPostsRequest())
   fetchPosts(userName).then(([response, json]) =>{
     if(response.ok){
@@ -31,7 +30,6 @@ export const fetchPostsWithRedux = (dispatch, userName) => {
 }
 
 const fetchPosts = (userName) => {
-  console.log('fetching...')
   return fetch(`https://api.github.com/users/${userName}`, { method: 'GET'})
     .then(response => Promise.all([response, response.json()]))
 }
